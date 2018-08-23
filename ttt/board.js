@@ -47,3 +47,5 @@ Board.prototype.render = function() {
     console.log(this.grid[i]);
   }
 }
+
+module.exports = Board;
