@@ -74,7 +74,7 @@ Game.prototype.run = async function() {
 
   this.switchTurn();
 
-  if (this.board.over) {
+  if (this.board.isOver()) {
     console.log('gg');
   } else {
     this.board.render();
