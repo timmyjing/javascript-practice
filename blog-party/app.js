@@ -4,13 +4,23 @@ const morgan = require('morgan');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-mongoose.connect(process.env.DATABASE);
+mongoose.connect(`${process.env.DATABASE}`, { useMongoClient: true });
 
 const db = mongoose.connection;
 db.on('error', (err) => {console.error(err)})
+let Blog, blogSchema;
 db.once('open', function() {
-  console.log('it works!')
+  blogSchema = new mongoose.Schema({
+    author: String,
+    title: String,
+    body: String,
+    updatedAt: Date,
+    createdAt: Date
+  })
+
+  Blog = mongoose.model('Blog', blogSchema);
 })
+
 
 const app = express();
 
@@ -71,14 +81,32 @@ app.get(
   }
 )
 
-app.get('/', (req, res) => res.render('index', {blogs: blogArray}));
+app.get('/', (req, res) => {
+  Blog.find( (err, blogs) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('index', {blogs});
+    }
+  })
+});
 
 app.get('/new', (req,res) => {
   res.render('new')
 });
 
 app.post('/', (req, res) => {
-  fs.writeFileSync('./seeds/blogs.json', JSON.stringify(req.body, null, 2));
+  const blog = {...req.body, createdAt: new Date(), updatedAt: new Date()}
+  const newBlog = new Blog(req.body);
+
+  newBlog.save( err => {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log('saved!')
+    }
+  });
+
   res.send(JSON.stringify(req.body, null, 2));
 });
 
