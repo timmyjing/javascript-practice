@@ -1,10 +1,13 @@
 extends layout.pug
 
+
 block content
   h1 I'll be an h1 tag with this text
   h3= variablePassed
   p.alert Here's a body of text with the class 'alert'
   .action divs are so common that we can just write the class!
+  link(rel='stylesheet', href='style.css')
+
 
 block foot
   p some cool footer!

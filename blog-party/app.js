@@ -6,6 +6,10 @@ const app = express();
 
 app.use(morgan('combined'));
 
+// app.use('/static', express.static(path.join(__dirname), 'public'));
+
+app.use(express.static('public'))
+
 app.engine('pug', require('pug').__express)
 
 app.set('views', 'views');
