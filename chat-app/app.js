@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
-const http = require('http').Server(app);
-const chatServer = require('./lib/chatServer');
+const http = require('http').createServer(app);
 
-const server = chatServer.listen(http);
+const chatServer = require('./lib/chatServer');
+chatServer.listen(http);
 
 app.use(express.static('public'));
 
-app.get('/', (req, res) => res.sendFile('index.html'));
+app.get('/', (req, res) => res.render('index.html'));
 
-http.listen(3000, () => console.log('Listening on Port 3000'));
+http.listen(8000, () => console.log('Listening on Port 8000'));
