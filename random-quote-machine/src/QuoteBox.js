@@ -7,22 +7,24 @@ class QuoteBox extends Component {
       quote: null,
       loading: true
     }
-  this.fetchQuotes = this.fetchQuotes.bind(this);
+  this.fetchQuote = this.fetchQuote.bind(this);
   }
 
   componentDidMount() {
     // fetchQuotes
+    this.fetchQuote();
   }
 
-  fetchQuotes() {
-
+  fetchQuote() {
+    fetch("https://randomstoicquotesapi.herokuapp.com/api/v1/quotes", {mode: 'no-cors'})
+      .then(res => console.log(res)).then(data => console.log(data));
   }
 
   render() {
     return <div id="quote-box">
       <div id="quote">A quote goes here </div>
       <div id="author">Quoter</div>
-      <button>Fetch Quote</button>
+      <button onClick={ e => this.fetchQuote(e)}>Fetch Quote</button>
       <button>Tweet Quote</button>
     </div>
   }
