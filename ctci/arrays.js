@@ -127,6 +127,34 @@ const stringCompression = str => {
   return result;
 }
 
-console.log(stringCompression('aaabbbbccccd'));
-console.log(stringCompression('aabcccccaaa'));
-console.log(stringCompression('a'));
+// console.log(stringCompression('aaabbbbccccd'));
+// console.log(stringCompression('aabcccccaaa'));
+// console.log(stringCompression('a'));
+
+/*
+1.6 Given an image represented by an NxN matrix, where each pixel in the image is
+4 bytes, write a method to rotate the image by 90 degrees. Can you do this in
+place?
+
+123   369
+456   258
+789   147
+Enumerate through the rows and build the result columns. Can do this in place by swapping elements.
+*/
+
+const rotateImage = img => {
+  let result = [];
+  let n = img.length - 1;
+
+  for (let i = 0; i < img.length; i++) {
+    let row = [];
+    for (let j= 0; j < img.length; j++) {
+      row.push(img[j][n - i]);
+    }
+    result.push(row);
+  }
+
+  return result;
+}
+
+console.log(rotateImage( [[1,2,3], [4,5,6], [7,8,9]] ));
