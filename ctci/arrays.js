@@ -76,8 +76,17 @@ characters, and that you are given the "true" length of the string. (Note: if im
 in Java, please use a character array so that you can perform this operation
 in place.)
 EXAMPLE
-Input: "Mr John Smith
+Input: "Mr John Smith     "
 Output: "Mr%20Dohn%20Smith" 
 
+Very trivial to do in JS...can just do a simple split by spaces and then join by the string '%20'.
+Could also build a new string by iterating through the argument string and placing the replacement string
+whenever there is a space. Also possibly a replace method that can be used along with regex.
 
 */
+
+const replaceString = str => str.trim().split(" ").join("%20");
+
+console.log(replaceString('Mr John Smith     '));
+console.log(replaceString("MrJohnSmith    "));
+console.log(replaceString("The bear"));
