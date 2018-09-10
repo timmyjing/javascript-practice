@@ -87,6 +87,46 @@ whenever there is a space. Also possibly a replace method that can be used along
 
 const replaceString = str => str.trim().split(" ").join("%20");
 
-console.log(replaceString('Mr John Smith     '));
-console.log(replaceString("MrJohnSmith    "));
-console.log(replaceString("The bear"));
+// console.log(replaceString('Mr John Smith     '));
+// console.log(replaceString("MrJohnSmith    "));
+// console.log(replaceString("The bear"));
+
+/*
+1.5 Implement a method to perform basic string compression using the counts
+of repeated characters. For example, the string aabcccccaaa would become
+a2blc5a3. If the "compressed" string would not become smaller than the original
+string, your method should return the original string.
+
+Iterate through the string, keep track of the current repeated char and the count. If the 
+next char is different than the repeated char, add the current repeated char and count to the 
+result and start a new running count with the new char. Have to add the last repeated char and count 
+once loop is done for edge cases. Check result length vs original length.
+*/
+
+const stringCompression = str => {
+  if (str.length <= 1) return str;
+
+  let result = "";
+  let lastChar = str[0];
+  let count = 1;
+
+  for (let i = 1; i < str.length; i++) {
+    if (str[i] === lastChar) {
+      count++;
+    } else {
+      result += `${lastChar}${count}`;
+      lastChar = str[i];
+      count = 1;
+    }
+  }
+
+  result += `${lastChar}${count}`;
+
+  result = result.length < str.length ? result : str;
+
+  return result;
+}
+
+console.log(stringCompression('aaabbbbccccd'));
+console.log(stringCompression('aabcccccaaa'));
+console.log(stringCompression('a'));
