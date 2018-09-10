@@ -24,8 +24,8 @@ db.once('open', function() {
 
 const app = express();
 
-const blogFile = fs.readFileSync('./seeds/blogs.json', 'utf-8')
-const blogArray = JSON.parse(blogFile);
+// const blogFile = fs.readFileSync('./seeds/blogs.json', 'utf-8')
+// const blogArray = JSON.parse(blogFile);
 
 app.use(morgan('combined'));
 
@@ -86,17 +86,18 @@ app.get('/', (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      console.log(blogs);
       res.render('index', {blogs});
     }
   })
 });
 
 app.get('/new', (req,res) => {
-  res.render('new')
+  res.render('new');
 });
 
 app.post('/', (req, res) => {
-  const blog = {...req.body, createdAt: new Date(), updatedAt: new Date()}
+  const blog = {...req.body, createdAt: new Date(Date.now()), updatedAt: new Date(Date.now())}
   const newBlog = new Blog(req.body);
 
   newBlog.save( err => {
@@ -106,8 +107,7 @@ app.post('/', (req, res) => {
       console.log('saved!')
     }
   });
-
-  res.send(JSON.stringify(req.body, null, 2));
+  res.redirect('/')
 });
 
 app.get('/:info', (req, res) => {
