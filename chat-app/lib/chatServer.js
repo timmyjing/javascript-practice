@@ -9,13 +9,25 @@ const io = require('socket.io');
 // });
 
 let chat;
+let guestNum = 1;
+const nickNames = {};
 
 const chatServer = {
   listen(server) {
     chat = io(server);
 
-    chat.on('connection', () => {
-      console.log('connected');
+    chat.on('connection', socket => {
+      console.log('user connected');
+      guestNum++;
+
+      socket.on('message', message => {
+        console.log('hi');
+        console.log(message);
+      })
+
+      socket.on('disconnect', () => {
+        console.log('user disconnected')
+      })
     });
   }
 }

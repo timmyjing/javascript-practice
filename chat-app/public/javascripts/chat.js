@@ -4,6 +4,8 @@ class Chat {
   }
 
   sendMessage(text) {
-    this.socket.emit('message', { text: message });
+    this.socket.emit('message', { text });
   }
 }
+
+module.exports = Chat;
