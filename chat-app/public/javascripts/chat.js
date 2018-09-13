@@ -6,6 +6,10 @@ class Chat {
   sendMessage(text) {
     this.socket.emit('message', { text });
   }
+
+  receiveMessage() {
+    
+  }
 }
 
 module.exports = Chat;

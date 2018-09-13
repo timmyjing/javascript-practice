@@ -5,6 +5,7 @@ class ChatUI {
     this.chat = new Chat(socket);
     this.input = document.querySelector('input');
     this.form = document.querySelector('form');
+    this.msgList = document.getElementById('messages');
     this.submitHandler();
   }
 
@@ -18,13 +19,17 @@ class ChatUI {
     console.log(this.getInput());
     console.log('send messages')
     this.chat.sendMessage(this.getInput());
+    this.receiveMessages(this.getInput());
   }
 
-  receiveMessages() {
-    this.chat.on('message', data => {
-      console.log(data);
-    });
-    console.log('received messages');
+  receiveMessages(message) {
+    const newMessage = document.createElement('li');
+    newMessage.textContent = message;
+    this.msgList.appendChild(newMessage);
+    // this.chat.on('get message', data => {
+    //   console.log(data);
+    // });
+    // console.log('received messages');
   }
 
   submitHandler() {

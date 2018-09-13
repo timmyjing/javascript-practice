@@ -157,4 +157,19 @@ const rotateImage = img => {
   return result;
 }
 
-console.log(rotateImage( [[1,2,3], [4,5,6], [7,8,9]] ));
+// console.log(rotateImage( [[1,2,3], [4,5,6], [7,8,9]] ));
+
+/*
+1.7 Write an algorithm such that if an element in an MxN matrix is 0, its entire row
+and column are set to 0.
+
+in 01  out 00   in 011  out 000
+   11      01      011      000
+                   110      000
+
+If done in place, the whole array will just become 0. Keep track of a duplicate array.  
+
+*/
+
+
+

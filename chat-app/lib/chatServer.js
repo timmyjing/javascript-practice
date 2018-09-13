@@ -21,7 +21,6 @@ const chatServer = {
       guestNum++;
 
       socket.on('message', message => {
-        console.log('hi');
         console.log(message);
       })
 
