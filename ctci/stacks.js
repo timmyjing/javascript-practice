@@ -8,23 +8,33 @@ class Node {
   }
 }
 
-
+// can use a reversed linked list. tail in the front.
 class Stack {
   constructor() {
     this.store = null;
   }
 
   peek() {
-
+    return this.store;
   }
 
   push(val) {
-
+    const node = new Node(val);
+    node.next = this.store;
+    this.store = node;
   }
 
-  pop(val) {
+  pop() {
+    if (!this.store) return;
 
+    this.store = this.store.next;
   }
 
+}
+
+class Queue {
+  constructor() {
+    
+  }
 
 }
