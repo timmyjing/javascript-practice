@@ -183,8 +183,39 @@ Another way would be to keep track of a partition index of the node. Iterate thr
 node. If the curr node is less than X, set the partition node to be the curr. If the curr node is greater than or equal, link it after
 the partition node. What if head node is >= than x? Will have to reset the pointer to head. Have to add extra checks to see if head is null
 after setting the partition. If so, set the next node smaller than x to be the head and set the partition node.
+Partition node is the last node of all the linked nodes that are less than x.
 
+O(n) time, have to go through all n nodes. O(1) extra space with the partition.
 */
+
+const partition = (head, x) => {
+  let currNode = head;
+  let partitionNode = null;
+
+  while (currNode) {
+
+    if (currNode.val < x) {
+      partitionNode = currNode;
+      currNode = currNode.next;
+    } else {
+
+      if (currNode === head) {
+        head = currNode.next;
+        currNode.next = partitionNode.next;
+        partitionNode.next = currNode;
+        currNode = head;
+      } else {
+        let temp = currNode.next;
+        currNode.next = partitionNode.next;
+        partitionNode.next = currNode;
+        currNode = temp;
+      }
+    }
+  }
+
+
+  return head;
+}
 
 
 
