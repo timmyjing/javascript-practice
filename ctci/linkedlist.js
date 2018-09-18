@@ -88,5 +88,32 @@ Start from the middle node, swap the values of the currNode and the next node. W
 the node before the tail node. Check currNode.next.next in order to have a reference to the node before the tail. Will have to do the swap
 once more and point the node to null afterwards. Could also keep a prev node pointer to remove instead of checking currNode.next.next.
 
+Edge cases - what happens if the list has only one node? two?
+
  O(n) time and O(1) space
+*/
+
+const deleteMid = node => {
+  let currNode = node;
+  let prev = null;
+
+  while (currNode.next) {
+    
+    let temp = currNode.val;
+
+    currNode.val = currNode.next.val;
+    currNode.next.val = temp;
+
+    prev = currNode;
+    currNode = currNode.next;
+  }
+
+  prev.next = null;
+}
+
+/* 
+2.4 Write code to partition a linked list around a value x, such that all nodes less than
+x come before all nodes greater than or equal to x.
+
+
 */
