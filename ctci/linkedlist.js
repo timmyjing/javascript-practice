@@ -38,6 +38,38 @@ const removeDup = list => {
 2.2 Implement an algorithm to find the kth to last element of a singly linked list.
 
 Naive solution: can traverse through the linked list and keep track of a count, then subtract the kth argument from 
-the count and iterate through the linked list again to find that element. O(2n) time and O(1) space
+the count and iterate through the linked list again to find that element. O(2n) time and O(1) space.
 
+Edge case? Return null if k is greater than the length of the list?
+
+Could also start at head and go through each node, keeping a counter of number of nodes traversed. Once that number is
+equal to k, set the kth node to the head and continue going through the nodes, updating the kth node everytime. Eventually, the kth
+node will point to the node we want once we reach the end of the list. O(n) time and O(1) space
+
+
+1-2-3  0, 3
+1, 0    1
+1-2, 1
 */
+
+const findKth = (list, k) => {
+  let kth = null;
+  let count = 0;
+  let currNode = list;
+
+  while (currNode) {
+    if (count < k) count++;
+
+    if (count === k) {
+      if (kth) {
+        kth = kth.next;
+      } else {
+        kth = head;
+      }
+    }
+
+    currNode = currNode.next;
+  }
+
+  return kth;
+}
