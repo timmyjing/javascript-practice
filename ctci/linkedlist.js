@@ -115,5 +115,49 @@ const deleteMid = node => {
 2.4 Write code to partition a linked list around a value x, such that all nodes less than
 x come before all nodes greater than or equal to x.
 
+Can go through the LL and add each node to two separate linked lists, one that is of all the values
+lower and one that is of all the nodes greater than or equal to. Need to clarifiy on what does it mean to partition? 
+Would this not be allowed?
 
+Another way would be to keep track of a partition index of the node. Iterate through the linked list and keep track of a partition
+node. If the curr node is less than X, set the partition node to be the curr. If the curr node is greater than or equal, link it after
+the partition node. What if head node is >= than x? Will have to reset the pointer to head. Have to add extra checks to see if head is null
+after setting the partition. If so, set the next node smaller than x to be the head and set the partition node.
+
+*/
+
+
+
+
+/*
+2.5 You have two numbers represented by a linked list, where each node contains a
+single digit. The digits are stored in reverse order, such that the Ts digit is at the
+head of the list. Write a function that adds the two numbers and returns the sum
+as a linked list.
+EXAMPLE
+Input: (7-> 1 -> 6) + (5 -> 9 -> 2).That is, 617 + 295.
+Output: 2 -> 1 -> 9.That is, 912.
+FOLLOW UP
+Suppose the digits are stored in forward order. Repeat the above problem.
+EXAMPLE
+Input: (6 -> 1 -> 7) + (2 -> 9 -> 5).That is, 617 + 295.
+Output: 9 -> 1 -> 2.That is, 912
+*/
+
+
+/* 
+2.6 Given a circular linked list, implement an algorithm which returns the node at
+the beginning of the loop.
+DEFINITION
+Circular linked list: A (corrupt) linked list in which a node's next pointer points
+to an earlier node, so as to make a loop in the linked list.
+EXAMPLE
+Input: A ->B->C->D->E- > C [the same C as earlier]
+Output: C
+
+*/
+
+
+/*
+2.8  Implement a function to check if a linked list is a palindrome.
 */
