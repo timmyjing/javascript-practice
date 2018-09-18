@@ -73,3 +73,20 @@ const findKth = (list, k) => {
 
   return kth;
 }
+
+
+/*
+2.3 Implement an algorithm to delete a node in the middle of a singly linked list,
+given only access to that node.
+EXAMPLE
+Input: the node c from the linked list a->b->c->d->e
+Result: nothing is returned, but the new linked list looks like a- >b- >d->e
+
+Keep swapping the value of the node with the next node, bubbling down the middle value to the end of the list and then remove the last node.
+
+Start from the middle node, swap the values of the currNode and the next node. Will eventually be at the tail node but need to have a reference to
+the node before the tail node. Check currNode.next.next in order to have a reference to the node before the tail. Will have to do the swap
+once more and point the node to null afterwards. Could also keep a prev node pointer to remove instead of checking currNode.next.next.
+
+ O(n) time and O(1) space
+*/
