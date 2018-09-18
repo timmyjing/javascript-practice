@@ -34,7 +34,34 @@ class Stack {
 
 class Queue {
   constructor() {
-    
+    this.store = null;
+  }
+
+  peek() {
+    return this.store;
+  }
+
+  push(val) {
+    const node = new Node(val);
+
+    if (!this.store) {
+      this.store = node;
+      return;
+    }
+
+    let currNode = this.store;
+
+    while (currNode.next) {
+      currNode = currNode.next;
+    }
+
+    currNode.next = node;
+  }
+
+  pop() {
+    if (!this.store) return;
+
+    this.store = this.store.next;
   }
 
 }
