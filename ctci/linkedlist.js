@@ -1,3 +1,63 @@
+// TODO IMPLEMENT A LINKED LIST AND NODE CLASS
+
+class Node {
+  constructor(val) {
+    this.val = val;
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+  }
+
+  find(val) {
+    let currNode = this.head;
+    while (currNode) {
+      if (currNode.val === val) return currNode;
+      currNode = currNode.next;
+    }
+
+    return null;
+  }
+
+  delete(val) {
+    let currNode = this.head;
+
+    if (currNode.val === val) {
+      this.head = currNode.next;
+      return;
+    }
+
+    while (currNode.next) {
+      if (currNode.next.val === val) {
+        currNode.next = currNode.next.next;
+      }
+      currNode = currNode.next;
+    }
+
+  }
+
+  add(val) {
+
+    if (!this.head) {
+      this.head = new Node(val);
+      return;
+    }
+
+    let currNode = this.head;
+
+    while (currNode.next) {
+      currNode = currNode.next;
+    }
+
+    currNode.next = new Node(val);
+  }
+}
+
+
+
 /*
 2.1 Write code to remove duplicates from an unsorted linked list.
 
