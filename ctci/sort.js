@@ -4,6 +4,22 @@
 
 // Quick Sort
 
+const quick = array => {
+
+  if (array.length <= 1) return array;
+
+// pick first element as the pivot
+  const pivot = array.shift();
+
+  const less = quick(array.filter( num => num < pivot));
+
+  const more = quick(array.filter( num => num >= pivot));
+
+  return less.concat([pivot], more);
+
+
+}
+// Quick Sort in place with partition
 
 // Merge Sort
 
@@ -68,4 +84,5 @@ const arr = [5,4,3,2,1];
 const arr1 = [1,2,5,2,1];
 
 // console.log(bubble(arr))
-console.log(mergesort(arr1))
+// console.log(mergesort(arr1))
+console.log(quick(arr));
