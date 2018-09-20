@@ -48,7 +48,24 @@ const minChange = (amount, coins) => {
   return changeCache[amount].length;
 }
 
-console.log(minChange( 14, [10 , 7 , 1] ));
-console.log(minChange( 5, [10 , 7 , 1] ));
-console.log(minChange( 0, [10 , 5] ));
+// console.log(minChange( 14, [10 , 7 , 1] ));
+// console.log(minChange( 5, [10 , 7 , 1] ));
+// console.log(minChange( 0, [10 , 5] ));
 
+
+// Partner B
+
+/* What do the following lines output, and why?
+  console.log(1 < 2 < 3);
+  console.log(3 > 2 > 1);
+
+  1 < true
+  3 > true
+  type coercion? true coerces into 1
+  return false because 1 < 1 is false
+  return true because 3 > 1 is true
+
+  wrong. evaluated left to right. not an expression
+  1 < 2 < 3 -> true < 3 -> 1 < 3 -> true
+  3 > 2 > 1 -> true > 1 -> 1 > 1 -> false
+*/
