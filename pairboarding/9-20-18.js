@@ -69,3 +69,60 @@ const minChange = (amount, coins) => {
   1 < 2 < 3 -> true < 3 -> 1 < 3 -> true
   3 > 2 > 1 -> true > 1 -> 1 > 1 -> false
 */
+
+// Number of ways to Make Change
+// Given an array of positive integers representing coin denominations and a single non-negative integer representing a target amount of money, 
+// implement a function that returns the number of ways to make change for that target amount using the given coin denominations. 
+// Note that an unlimited number of coins is at your disposal.
+
+// Build a cache of the amounts from 1 to the amount. For each amount, iterate through the coins. If the coin value is <= than the 
+// current amount, use the coin and add it to all the current amount minus the coin value ways of making change. Return the length of the
+// final amount, which will be all the number of ways to make change. Duplicate values will occur. Can just keep counts of ways to make a change for each amount instead.
+
+// input: 6, [1, 5]
+// output: 2 // (1x1 + 1x5 and 6x1)
+
+const waysMakeChange = (amount, coins) => {
+  const cache = {};
+  coins = coins.sort( (a, b) => b - a);
+
+  for (let i = 1; i <= amount; i++) {
+    cache[i] = [];
+    for (let j = 0; j < coins.length; j++) {
+      let coin = coins[j];
+
+      if (coin <= i) {
+        if (coin === i) {
+          cache[i].push([coin]);
+        } else {
+          let ways = cache[i - coin].map( el => el.concat([coin]));
+          ways = ways.filter( way => cache[i].indexOf(way.sort( (a,b) => a - b )) === -1);
+          // have to filter through the solutions but JS makes it difficult to compare arrays.
+          cache[i] = cache[i].concat(ways);
+          console.log(coin)
+          console.log(cache)
+        }
+      }
+    }
+  }
+
+  return cache[amount].length;
+}
+
+// console.log(waysMakeChange(6, [1,5]));
+
+
+// solution
+
+const numberOfWaysToMakeChange = (n, denoms) => {
+  const ways = (new Array(n + 1)).fill(0);
+  ways[0] = 1;
+  for (let denom of denoms) {
+    for (let amount = 1; amount < n + 1; amount++) {
+      if (denom <= amount) {
+        ways[amount] += ways[amount - denom];
+      }
+    }
+  }
+  return ways[n];
+}
