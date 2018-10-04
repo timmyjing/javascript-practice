@@ -80,3 +80,22 @@ const topSort = vertices => {
 // Given a sorted dictionary (array of words) of an alien language, 
 // find the order of the characters in the language.
 
+// take the first entry, get the unique chars and start a connection
+// first char of first entry must be the top vertex
+// check entries and compare with similar entries to get the difference
+// ex abcd -> abca, can infer that d -> a due to the ordering
+// compare to previous entry to see if you can create an edge
+
+b - a
+d - a
+b - d
+
+a - c
+
+b - d - a - c
+
+
+c -> a
+aaa, aab, diff is a,b so a->b
+c -> a
+a -> b
