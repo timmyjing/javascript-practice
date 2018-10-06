@@ -85,7 +85,60 @@ for each stack...technically won't be using a single array anymore.
 3.2 How would you design a stack which, in addition to push and pop, also has a
 function min which returns the minimum element? Push, pop and min should
 all operate in O(1) time.
+
+keep another stack of the min value. peek the value on top of the min stack to
+get the min value in O(1). when pushing to this stack, check if the value is less
+than the top of min stack, if so then this is the new min. when popping from the stack,
+if the value is the same as the top of the min stack, also pop the top of the min stack.
 */
+
+class minStack {
+  constructor() {
+    this.stack = [];
+    this.min = [];
+  }
+
+  push(val) {
+    this.stack.push(val)
+
+    if (this.min.length == 0 || val <= this.min[this.min.length - 1]) {
+      this.min.push(val)
+    }
+  }
+
+  pop() {
+    if (this.stack.length === 0) return null;
+
+    const val = this.stack.pop();
+
+    if (val === this.getMin()) {
+      this.min.pop();
+    }
+
+    return val;
+  }
+
+  getMin() {
+    if (this.min.length !== 0) {
+      return this.min[this.min.length - 1];
+    } else {
+      return null;
+    }
+  }
+}
+
+
+// const mStack = new minStack();
+
+// mStack.push(6);
+// console.log(mStack.getMin());
+// mStack.push(4);
+// console.log(mStack.getMin());
+// mStack.push(2);
+// console.log(mStack.getMin());
+// mStack.pop();
+// console.log(mStack.getMin());
+
 
 
 /*
@@ -101,4 +154,46 @@ FOLLOW UP
 Implement a function popAt(int index) which performs a pop operation on
 a specific sub-stack.
 
+
+PSEUDO CODE:
+create a set of stacks class that has a store that holds the nested stacks.
+this store itself can be a stack too in that the top of the store stack will be 
+the most recent stack, which we will pop from or push to first.
+
 */
+
+class SetofStacks {
+  constructor(height) {
+    this.height = height;
+    this.store = [[]];
+  }
+
+  push(val) {
+    const stackIdx = this.store.length - 1;
+    const stack = this.store[stackIdx];
+
+    if (stack.length > this.height) {
+      stack.push(val);
+    } else {
+      this.store.push([val]);
+    }
+
+    return val;
+  }
+
+  pop() {
+    let stackIdx = this.store.length - 1;
+    let stack = this.store[stackIdx];
+
+    if (stack.length > 0) {
+      return stack.pop();
+    } else {
+      if (this.store.length !== 1) {
+        this.store.pop();
+        stack = this.store[this.store.length - 1];
+        return stack.pop();
+      }
+      return null;
+    }
+  }
+}
