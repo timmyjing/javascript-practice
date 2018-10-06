@@ -197,3 +197,59 @@ class SetofStacks {
     }
   }
 }
+
+
+/*
+3.4 
+In the classic problem of the Towers of Hanoi, you have 3 towers and N disks of
+different sizes which can slide onto any tower. The puzzle starts with disks sorted
+in ascending order of size from top to bottom (i.e., each disk sits on top of an
+even larger one). You have the following constraints:
+(1) Only one disk can be moved at a time.
+(2) A disk is slid off the top of one tower onto the next tower.
+(3) A disk can only be placed on top of a larger disk.
+Write a program to move the disks from the first tower to the last using stacks
+*/
+
+
+/*
+3.5
+Implement a MyQueue class which implements a queue using two stacks.
+
+NOTES: A queue is FIFO. Have two stacks with are LIFO. Two functions are enqueue and dequeue
+for a queue. Whenever you queue an el, push it to Stack 1. When you need to pop an element, pop all elements
+from Stack 1 and push them onto Stack 2 and pop from Stack 2. This will reverse the LIFO order of Stack 1,
+the first ones in will be on top of Stack 2 and the last ones in on the bottom.
+
+Whenever you dequeue, have to check if Stack 2 is empty. If so, pop from Stack 1 and push onto Stack 2.
+
+*/
+
+
+/*
+3.6
+Write a program to sort a stack in ascending order (with biggest items on top).
+You may use at most one additional stack to hold items, but you may not copy
+the elements into any other data structure (such as an array). The stack supports
+the following operations: push, pop, peek, and isEmpty.
+
+
+two stacks, whenever you push an el in, check if top of current stack is empty or if
+top is less than el. if so, push on to top of current stack.
+
+if not, pop the top of the stack 1 and push to stack 2 until you find an value that is <= to 
+the el. then pop/push from stack 1 to 2.
+
+*/
+
+
+/*
+3.7
+An animal shelter holds only dogs and cats, and operates on a strictly "first in,
+first out" basis. People must adopt either the "oldest" (based on arrival time) of
+all animals at the shelter, or they can select whether they would prefer a dog or
+a cat (and will receive the oldest animal of that type). They cannot select which
+specificanimal they would like. Create the data structures to maintain this system
+and implement operations such as enqueue, dequeueAny, dequeueDog and
+dequeueCat.You may use the built-in LinkedList data structure.
+*/
