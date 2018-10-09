@@ -43,3 +43,79 @@ const magicIndex = arr => {
 
   return false;
 }
+
+/*
+9.8 Write an algorithm to print all ways of arranging eight queens on an 8x8 chess
+board so that none of them share the same row, column or diagonal. In this case,
+"diagonal" means all diagonals, not just the two that bisect the board.
+
+Brute force solution, pick a row and try ever column position and push those solved boards into a result array if they are a
+valid board arrangement. Will have to do some sort of backtracking...if 8 queens cannot be placed, then discard solution. Every time
+you place a queen, eliminate the rows and cols and diags from the rest of the possible spots. Will need to mark the nodes.
+
+Will need a helper method to 'solve' a certain board when placing the first queen. Helper method will take a board and try to place
+a queen at each row and backtrack if invalid.
+
+ways to arrange board with queen at row 0, col 0 through 8
+ways to arrange board with q at 0,0 = q at 0,0 and q2 at 1,2 or q2 at 1,3...etc
+
+as you place a queen at a location, you eliminate some possibilities of where the next queen could be
+*/
+
+const placeQueens = (row, queenCols, results) => {
+
+  if (row === 8) return result.push(queenCols);
+
+//  try to place a queen at each column
+  for (let i = 0; i < 8; i++) {
+    if (validMove(i,queenCols)) {
+      queenCols[row] = i;
+      placeQueens(row + 1, queenCols, results);
+    }
+  }
+  return results;
+}
+
+const validMove = (col, cols) => {
+  // return false if diag or col has been seen
+}
+
+
+/*
+9.8
+
+You have a stack of n boxes, with widths wi, heights li and depths di The boxes
+cannot be rotated and can only be stacked on top of one another if each box in the
+stack is strictly larger than the box above it in width, height, and depth. Implement
+a method to build the tallest stack possible, where the height of a stack is the sum of
+the heights of each box.
+
+Similar to house robber problem? If there is only one box, then take this box only. This is also the base solution.
+An additional box, determine if the boxes can be stacked with constraints. If so, add onto stack. If not, take the one with greater
+height, which will either be the new box or the previous stack. Sliding window problem? If current box is too big to add to top of stack,
+keep removing boxes until there is a fit.
+
+Actually a problem where you take the largest box and try to arrange other boxes on top. Experiment with all boxes as the bottom
+and experiment adding boxes and etc.
+
+*/
+
+const stackBoxes = (w, h, d) => {
+  const cache = [[0], [0]];
+
+  for (let i = 1; i < w.length; i++) {
+    let last = cache[1][cache[1].length - 1];
+
+    if (w[i] < w[last] && h[i] < w[last] && d[i] < w[last]) {
+      cache[1].push(i);
+    } else {
+      let height = cache[1].map( i => h[i]).reduce( (a, c) => a + c, 0);
+      cache[1] = h[i] > height ? [i] : cache[1];
+    }
+
+    
+  }
+
+
+  return cache[1];
+}
