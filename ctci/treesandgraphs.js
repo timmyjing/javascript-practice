@@ -105,3 +105,65 @@ const createBST = array => {
 
   return root;
 }
+
+
+/*
+4.4
+Given a binary tree, design an algorithm which creates a linked list of all the nodes at
+each depth (e.g., if you have a tree with depth D, you'll have D linked lists)
+
+could do a BFS type traversal and then build each LL. Since this is a binary tree, nodes will have L and
+R pointer. use the R pointer to create a new LL.
+*/
+
+
+const bstToLL = root => {
+  if (!root || (!root.left && !root.right)) return root;
+
+  let queue = [];
+
+  if (root.left) queue.push(root.left);
+  if (root.right) queue.push(root.right);
+
+  const result = [root];
+
+  root.left = null;
+  root.right = null;
+
+  while (queue.length > 0) {
+    let newLevel = [];
+    let list = null;
+    let prev = null;
+
+    queue.forEach( node => {
+      if (node.left) newLevel.push(node.left);
+      if (node.right) newLevel.push(node.right);
+
+      node.left = null;
+      node.right = null;
+      
+      if (!list) {
+        list = node;
+        prev = node;
+      } else {
+        prev.next = node;
+        prev = node;
+      }
+
+      queue = newLevel;
+      result.push(list);
+    })
+
+    return result;
+  }
+
+
+
+
+  return result;
+
+}
+
+/*
+4.5  Implement a function to check if a binary tree is a binary search tree.
+*/
