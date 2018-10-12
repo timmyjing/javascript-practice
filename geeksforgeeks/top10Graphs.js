@@ -45,6 +45,8 @@ class Graph {
 
 
 
+
+
 function bfs(graph, vertex) {
   let visited = new Array(graph.vertices.length);
   visited.fill(false);
@@ -63,4 +65,29 @@ function bfs(graph, vertex) {
   }
 }
 
+
+// Depth First Search or DFS for a Graph
+// Depth First Traversal (or Search) for a graph is similar to Depth First Traversal of a tree. The only catch here is, unlike trees, 
+// graphs may contain cycles, so we may come to the same node again. To avoid processing a node more than once, we use a boolean visited 
+// array.
+
+// For example, in the following graph, we start traversal from vertex 2. When we come to vertex 0, we look for all adjacent vertices of 
+// it. 2 is also an adjacent vertex of 0. If we don’t mark visited vertices, then 2 will be processed again and it will become a non-terminating process. 
+// A Depth First Traversal of the following graph is 2, 0, 1, 3.
+
+function dfs(graph, vertex, visited = null) {
+  if (!visited) {
+    visited = new Array(graph.vertices.length);
+    visited.fill(false);
+  }
+
+  console.log(vertex);
+  visited[vertex] = true;
+
+  const adj = graph.getAdj(vertex);
+  adj.forEach( v => {
+    if (!visited[v]) dfs(graph, v, visited);
+  });
+
+}
 
