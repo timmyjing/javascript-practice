@@ -1,3 +1,56 @@
+// Longest Common Subsequence | DP-4
+// We have discussed Overlapping Subproblems and Optimal Substructure properties in Set 1 and Set 2 respectively. 
+// We also discussed one example problem in Set 3. Let us discuss Longest Common Subsequence (LCS) problem as one 
+// more example problem that can be solved using Dynamic Programming.
+
+// LCS Problem Statement: Given two sequences, find the length of longest subsequence present in both of them. A subsequence 
+// is a sequence that appears in the same relative order, but not necessarily contiguous. For example, “abc”, “abg”, “bdf”, “aeg”, ‘
+// ”acefg”, .. etc are subsequences of “abcdefg”. So a string of length n has 2^n different possible subsequences.
+
+// It is a classic computer science problem, the basis of diff (a file comparison program that outputs the differences between 
+// two files), and has applications in bioinformatics.
+
+// Examples:
+// LCS for input Sequences “ABCDGH” and “AEDFHR” is “ADH” of length 3.
+// LCS for input Sequences “AGGTAB” and “GXTXAYB” is “GTAB” of length 4.
+// build a matrix of m*n. each row represents a letter of str1, each col a letter of str2.
+// iterate through and see if the letters match
+// if so, add one to the value of row - 1, col - 1 (this is so because a letter can only match once per row and col)
+// if not, choose the max of row - 1, col or row, col - 1
+/*
+ex.
+    A B C
+  0 0 0 0
+A 0 1 1 1
+C 0 1 1 2
+B 0 1 2 1
+
+*/
+
+
+function lcs(str1, str2) {
+  const grid = [];
+  
+  for (let i = 0; i < str1.length + 1; i++) {
+    grid.push( new Array(str2.length + 1));
+    grid[i][0] = 0;
+  }
+
+  grid[0].fill(0);
+
+  for (let i = 1; i < grid.length; i++) {
+    for (let j = 1; j < grid[0].length; j++) {
+      if (str1[i] === str2[j]) {
+        grid[i][j] = 1 + grid[i - 1][j - 1];
+      } else {
+        grid[i][j] = Math.max(grid[i - 1][j], grid[i][j - 1])
+      }
+    }
+  }
+
+  return grid[grid.length][grid[0].length];
+}
+
 // The Longest Increasing Subsequence (LIS) problem is to find the length of the 
 // longest subsequence of a given sequence such that all elements of the subsequence 
 // are sorted in increasing order. For example, the length of LIS for {10, 22, 9, 33, 21, 50, 41, 60, 80} 
