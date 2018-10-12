@@ -13,7 +13,7 @@
 
 class Graph {
   constructor() {
-    this.map  = {};
+    this.vertices  = {};
   }
 
 
@@ -31,11 +31,36 @@ class Graph {
 
     this.map[from].push(to);
   }
+
+  getAdj(v) {
+    if (this.vertices[v]) return this.vertices[v];
+    return null;
+  }
+
+  get vertices() {
+    return Object.keys(this.vertices);
+  }
 }
 
 
 
 
-function bfs(graph) {
+function bfs(graph, vertex) {
+  let visited = new Array(graph.vertices.length);
+  visited.fill(false);
 
+  const queue = [vertex];
+
+  while (queue.length > 0) {
+    let currVertex = queue.unshift();
+    if (!visited[currVertex]) {
+      let adj = graph.getAdj(currVertex); 
+      adj.forEach( v => queue.push(v));
+      visited[currVertex] = true;
+    }
+
+    console.log(currVertex);
+  }
 }
+
+
