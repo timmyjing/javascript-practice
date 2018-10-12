@@ -24,7 +24,9 @@ ex.
 A 0 1 1 1
 C 0 1 1 2
 B 0 1 2 1
-
+notes: i just want to check if the last letters of each string match. if they do, then i can add one to the previous solution of 
+str1[0..-2], str[0..-1]. the memoization is for saving the previous solutions so you don't have to do more recursive calls by 
+building from the bottom up
 */
 
 
