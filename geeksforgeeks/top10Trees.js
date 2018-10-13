@@ -8,6 +8,12 @@ function findMinDepth(root) {
 
   if (!root.left && !root.right) return 1;
   
+  let left = Infinity;
+  let right = Infinity;
 
+  if (root.left) left = 1 + findMinDepth(root.left);
 
+  if (root.right) right = 1 + findMinDepth(root.right);
+
+  return Math.min(left, right);
 }
