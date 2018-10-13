@@ -47,3 +47,31 @@ function insertLL(list, value) {
 
   return list;
 }
+
+// Delete a given node in Linked List under given constraints
+// Given a Singly Linked List, write a function to delete a given node. Your function must follow following constraints:
+// 1) It must accept pointer to the start node as first parameter and node to be deleted as second parameter i.e., pointer to head node is not global.
+// 2) It should not return pointer to the head node.
+// 3) It should not accept pointer to pointer to head node.
+
+// You may assume that the Linked List never becomes empty.
+
+// Let the function name be deleteNode(). In a straightforward implementation, the function needs to modify head pointer when the node to be 
+// deleted is first node. As discussed in previous post, when a function modifies the head pointer, the function must use one of the given approaches, 
+// we can’t use any of those approaches here.
+
+function deleteNode(head, node) {
+  if (!head) return;
+  if (head === node) head = head.next;
+
+  let curr = head;
+  while (curr.next !== node && curr.next ) {
+    curr = curr.next;
+  }
+
+  if (curr.next === node) {
+    curr.next = node.next;
+  }
+
+  return;
+}
