@@ -112,7 +112,88 @@ const LIS = arr => {
   return Math.max(...result);
 };
 
-console.log(LIS([3,2]));
-console.log(LIS([50, 3, 10, 5, 7, 40, 80]));
-console.log(LIS([3,10,2,1,20]));
+// console.log(LIS([3,2]));
+// console.log(LIS([50, 3, 10, 5, 7, 40, 80]));
+// console.log(LIS([3,10,2,1,20]));
+
+/*
+Edit Distance | DP-5
+Given two strings str1 and str2 and below operations that can performed on str1. Find minimum number of edits (operations) required to convert ‘str1’ into ‘str2’.
+
+Insert
+Remove
+Replace
+All of the above operations are of equal cost.
+
+    a a t
+  0 1 2 3
+a 1 0 1 2
+a 2 1 0 1
+t 3 2 1 0
+
+    s a t u r d a y
+  0 1 2 3 4 5 6 7 8
+s 1 0 1 2 3 4 5 6 7
+u 2 1 1 2 2 3 4 5 6
+n 3 2 2 2 3 3 4 5 6
+d 4 3 3 3 3 4 3 5 6
+a 5 4 3 4 4 4 5 3 5
+y 6 5 4 4 5 5 5 5 3
+
+
+
+Solution: if last letters match, get the result of str1[0..-2], str2[0..-2] because curr = editDistance(str1[0..-2], str2[0..-2]);
+if not, choose the min of i - 1, j - 1, i - 1 and j - 1 and add one to it note (if they dont match, you have to consider all the possible
+operations you could do to get it to match. the last letters could match but at other indexes so there could be certain operations
+that take less steps to get the result)
+
+first row and first col will be labeled from 0 to length (this is because if either string was empty, it would take length times operations 
+to fulfill, other longest common subsequence was about matching and thus the 0th row and col were all 0 as the two strings would not match if 
+one were empty and the other wasn't)
+
+BELOW WAS MY ATTEMPT. IT IS INCORRECT
+try conditions
+str1 is x,str2 is y
+
+if lengths equal and if str1[-1] === str2[-1] = 0 + editDistance(str1[0..-2],str2[0..-2]) EQUAL
+if str2 longer than str1 = 1 + editDistance(str2[0..-2], str1) REMOVE FROM STR2
+if str2 is shorter than str1 = 1 + editDistance(str2, str1[0..-2]) INSERT ONE INTO STR1
+if str2 is as long as str1 and last arent equal, = 1 + editDistance(str2[0..-2], str[0..-2]) REPLACE LAST LETTER
+*/
+
+function editDistance(a, b) {
+  if (!a) return b.length;
+  if (!b) return a.length;
+
+  const distances = [];
+
+  for (let i = 0; i <= a.length; i++) {
+    const arr = new Array(b.length + 1);
+    distances.push(arr);
+  }
+
+  for (let i = 0; i <= a.length; i++) {
+    for (let j = 0; j <= b.length; j++) {
+      if (i === 0) {
+        distances[i][j] = j;
+      } else if (j === 0) {
+        distances[i][j] = i;
+      }
+      else {
+
+        if (a[i - 1] !== b[j - 1]) {
+          distances[i][j] = 1 + Math.min( distances[i - 1][j], distances[i][j - 1], distances[i - 1][j-1] );
+        } else {
+          distances[i][j] = distances[i - 1][j - 1];
+        }
+      }
+    }
+  }
+
+  return distances[a.length][b.length];
+}
+
+// console.log(editDistance('geeks', 'gises'));
+// console.log(editDistance('bat', 'cat'));
+// console.log(editDistance('sunday', 'saturday'));
 
