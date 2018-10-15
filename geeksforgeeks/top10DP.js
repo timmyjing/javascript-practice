@@ -197,3 +197,62 @@ function editDistance(a, b) {
 // console.log(editDistance('bat', 'cat'));
 // console.log(editDistance('sunday', 'saturday'));
 
+
+/*
+Partition a set into two subsets such that the difference of subset sums is minimum
+Given a set of integers, the task is to divide it into two sets S1 and S2 such that the absolute difference between their sums is minimum.
+If there is a set S with n elements, then if we assume Subset1 has m elements, Subset2 must have n-m elements and the value of abs(sum(Subset1) – sum(Subset2)) should be minimum.
+
+Example:
+
+
+
+Input:  arr[] = {1, 6, 11, 5} 
+Output: 1
+Explanation:
+Subset1 = {1, 5, 6}, sum of Subset1 = 12 
+Subset2 = {11}, sum of Subset2 = 11        
+
+base cases, if input arr is len 1, what do you return?
+if input arr is len 2, then the two sets will be arr[0] and arr[1] and the min difference is abs(arr[0] - arr[1]);
+with a third element...get min from these combos [0, (1,2)], [(0,1), 2], [(0,2), 1]
+2 els abs(0 - 1)
+3 els abs(abs(0 - 1) - 2)
+
+1, 6, 11....min is 4
+
+subset 1,6,11
+min {1,6} {11} || min {1} {6,11} || min {6} {11, 1}
+
+if added 5, you would iterate through each pair of subsets and try adding the new num to subset 1 or 2
+min {1,6,5} {11}, min {1,6} {11,5} and etc...
+
+memoize
+for every el, take the previous solution and get the abs diff from the current el added to it. then also get the diff of the sum of previous els
+and current el.
+1: null
+1,6 : abs(1-6) = 5
+1,6,11: abs(5 - 11) = 6, abs (1+6 - 11) = 4;
+1,6,11,5: 1, 1, 13
+1,6,11,5, 13 = 
+*/
+
+function partition(arr) {
+  if (arr.length <= 1) return null;
+
+  if (arr.length === 2) return Math.abs(arr[0] - arr[1]);
+
+  let prev = [Math.abs(arr[0] - arr[1])];
+
+  for (let i = 2; i < arr.length; i++) {
+    let curr = arr[i];
+
+    prev = prev.map( el => Math.abs(el - curr));
+
+    prev.push( Math.abs(arr.slice(0, i).reduce( (a, b) => a + b, 0) - arr[i]));
+  }
+
+  return Math.min(...prev);
+}
+
+console.log(partition([3, 1, 4, 2, 2, 1]));
