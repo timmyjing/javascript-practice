@@ -255,4 +255,54 @@ function partition(arr) {
   return Math.min(...prev);
 }
 
-console.log(partition([3, 1, 4, 2, 2, 1]));
+// console.log(partition([3, 1, 4, 2, 2, 1]));
+
+/*
+Count number of ways to cover a distance
+Given a distance ‘dist, count total number of ways to cover the distance with 1, 2 and 3 steps.
+
+Examples :
+
+Input:  n = 3
+Output: 4
+Below are the four ways
+ 1 step + 1 step + 1 step
+ 1 step + 2 step
+ 2 step + 1 step
+ 3 step
+
+Input:  n = 4
+Output: 7
+
+
+start an arr cache of keeping track of the steps n + 1 length
+initialize one as 0, one way to get to step 0
+for each k distance, iterate through 1 and 3 steps as steps and add the amounts of ways[k - steps] if k - steps >= 0
+bottom up appraoch
+k ways
+0  1
+1  1  (ways[0])
+2  1 + ways[1]= 2
+3  1 + ways[1] + ways[2] = 4
+
+ways to get to n steps = ways[n - 1] + ways[n - 2] + ways[n - 3]
+
+
+*/
+
+function ways(n) {
+  const cache = new Array(n + 1);
+  cache.fill(0);
+  cache[0] = 1;
+
+  for (let i = 1; i < cache.length; i++) {
+    for (let steps = 1; steps <= 3; steps++) {
+      if (i - steps >= 0) {
+        cache[i] += cache[i - steps];
+      }
+    }
+  }
+  return cache[n + 1];
+}
+
+// O(steps * n) time. O(n + 1) space for the cache. This can be improved since we only need the last steps (3) in reality.
