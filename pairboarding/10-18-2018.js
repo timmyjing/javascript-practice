@@ -94,3 +94,16 @@ function kNonRepeatChars(str, k) {
 }
 
 console.log (kNonRepeatChars('ABCDEFAAAAABBBCDEFZHX', 3));
+
+
+/*
+Merge M Sorted Lists of Variable Length
+Given an array of sorted integer arrays, print them in sorted order efficiently. The number of arrays in your array of arrays can vary as can the length of each individual array.
+let list = [
+        [10, 20, 30, 40],
+        [15, 25, 35],
+        [27, 29, 37, 48, 93],
+        [32, 33]
+      ]
+printSorted(list); // => [ 10, 15, 20, 25, 27, 29, 30, 32, 33, 35, 37, 40, 48, 93 ]
+*/
