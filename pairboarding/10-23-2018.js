@@ -40,6 +40,8 @@ if k <= l, recursively search left subtree for the kth smallest
 if k > l + 1, recursively search right subtree for kth - lth smallest
 
 helper method needed to count l subtree nodes
+
+need to count nodes on left subtree so O(n) time with n being the number of nodes in a subtree.
 */
 
 function countNodes(root) {
@@ -105,3 +107,72 @@ function kthSmallestBST(root, k) {
 //   2   6
 //    \   \
 //     4   7
+
+/*
+first find the node. if node doesnt exist return root
+if node is root, then will have to delete the root and promote a new root.
+if node is found, actions to take depends on number of children of node.
+if node has no children, then just delete the node.
+if node has one child, promote the child and delete the node.
+if node has two children, promote the rightmost child on the left tree. this rightmost node on the left
+subtree will always be the max of the left subtree and swapping it with the node to be deleted will 
+still fulfill the properties of a BST. delete the leaf node after swapping.
+
+*/
+
+function findParent(root, val) {
+  if (!root) return null;
+
+  if ((root.left && root.left.val === val) || (root.right && root.right.val === val)) return root;
+
+  if (val < root.val) return findParent(root.left);
+
+  if (val > root.val) return findParent(root.right); 
+}
+
+function promoteChild(node) {
+  if (!node.left && !node.right) return null;
+
+  if (node.left && !node.right) return node.left;
+
+  if (node.right && !node.left) return node.right;
+
+// if two children, find the right most node on left subtree and promote
+  let max = findMax(node.left);
+  
+  // delete the max from the BST
+  deleteFromBST(node.left);
+
+  max.left = node.left;
+  max.right = node.right;
+
+  return max;
+}
+
+function findMax(root) {
+  if (!root || !root.right) return root;
+
+  return findMax(root.right);
+}
+
+function deleteFromBST(root, key) {
+  if (root.val === key) {
+    root = promoteChild(root);
+
+
+    return root;
+  }
+
+  let parent = findParent(root, key);
+
+  if (!parent) return root;
+
+  // now that you have the parent, promote child
+
+  if (parent.left && parent.left.val === key) parent.left = promoteChild(parent.left);
+
+  if (parent.right && parent.right.val === key) parent.right = promoteChild(parent.right);
+
+  return root;
+
+}
