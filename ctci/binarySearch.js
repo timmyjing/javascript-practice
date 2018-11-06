@@ -16,7 +16,7 @@ function binarySearch(arr, value) {
   let high = arr.length - 1;
 
   while (low <= high) {
-    let mid = Math.floor(high - low / 2);
+    let mid = Math.floor(low + (high - low) / 2);
     let el = arr[mid];
 
     if (el === value) {
@@ -90,7 +90,7 @@ function bSearchWords(arr, prefix) {
     
     if (low > high) return [];
 
-    let mid = Math.floor(high - low / 2);
+    let mid = Math.floor(low + (high - low) / 2);
 
     if (arr[mid].startsWith(prefix)) {
       // have to find new low and high
