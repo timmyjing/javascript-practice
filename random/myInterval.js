@@ -33,8 +33,6 @@ function myInterval(fn, ms) {
     }, ms);
   }
 
-  timer = tick(fn, ms);
-
   return function() {
     clearTimeout(timer);
   };
