@@ -1,0 +1,49 @@
+<HTML>
+
+  <head>
+    <title>Timer</title>
+  </head>
+
+  <body>
+    <h1>Timer</h1>
+    <div id="timer"></div>
+    <button id="start">Start/Stop</button>
+    <button id="reset">Reset</button>
+  </body>
+
+  <script>
+    let seconds = 50;
+    let interval;
+
+    const timer = document.getElementById('timer');
+    const start = document.getElementById('start');
+    const reset = document.getElementById('reset');
+    timer.innerText = seconds;
+
+    function startTimer(e) {
+      e.preventDefault();
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+        return;
+      }
+      interval = setInterval( () => {
+        seconds++;
+        timer.innerText = seconds;
+      }, 1000);
+    }
+
+
+    function resetTimer(e) {
+      e.preventDefault();
+      seconds = 0;
+      timer.innerText = seconds;
+    } 
+
+    reset.addEventListener('click', resetTimer);
+    start.addEventListener('click', startTimer);
+  
+  </script>
+
+
+</HTML>
