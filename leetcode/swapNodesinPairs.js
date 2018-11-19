@@ -27,6 +27,9 @@
  2 -> 1 -> 4 - 3 -> null
  
  if at head, rearrange head pointer
+
+ O(n) time complexity where n is length of linked list,
+ O(1) space
  */
 var swapPairs = function(head) {
   let prev = head;
