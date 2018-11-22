@@ -16,7 +16,9 @@
  or visted reach. continue until everything is visited
  
 
- 
+ O(mn) time complexity where m is row length and n is column length
+ O(1) extra space but have to mutate matrix. Will be O(n) if didnt.
+
  */
 var spiralOrder = function(matrix) {
   if (matrix.length === 0) return matrix;
