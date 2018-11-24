@@ -1,0 +1,81 @@
+<html>
+<head>
+  <title>Progress Bar</title>
+</head>
+
+<body>
+  <div id="progress-bar-container">
+    <h1>Progress Bars</h1>
+  </div>
+  <button id="start-button">Start</button>
+</body>
+
+
+<script>
+  const button = document.getElementById('start-button');
+  const container = document.getElementById('progress-bar-container');
+
+  function createBar() {
+    const newBar = document.createElement('div')
+    const newProgress = document.createElement('div')
+    newProgress.className = 'progress'
+    newBar.className = 'progress-bar';
+    newBar.appendChild(newProgress)
+    newProgress.innerText = '0%';
+    newProgress.style.width = '0%';
+    container.appendChild(newBar);
+    return newProgress;
+
+  }
+
+  function addProgressBar() {
+    const queue = [];
+    let timer = null;
+    
+    function incProgress(progress) {
+      const width = parseInt(progress.innerText) + 1;
+      console.log(queue);
+      if (width > 100) {
+        clearInterval(timer);
+        if (queue.length > 0) {
+          let nextProgress = queue.shift();
+          console.log(timer);
+          timer = setInterval( () => incProgress(nextProgress), 30);
+        } else {
+          timer = null;
+        }
+        return;
+      }
+      progress.style.width = `${width}%`;
+      progress.innerText = `${width}%`;
+    }
+
+    return function() {
+      const newProgress = createBar();
+      console.log(timer);
+      if (!timer) {
+        timer = setInterval( () => incProgress(newProgress), 30);
+      } else {
+        queue.push(newProgress);
+      }
+    }
+  }
+
+  button.addEventListener('click', addProgressBar())
+
+
+</script>
+  <style>
+      .progress {
+        background-color: green;
+        height: 20px;
+        text-align: end;
+      }
+  
+      .progress-bar {
+        border: 1px solid black;
+        width: 200px;
+        height: 20px;
+      }
+    </style>
+</html>
