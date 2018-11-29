@@ -1,0 +1,176 @@
+<DOCTYPE html>
+    <head>
+      <title>UI Playground</title>
+      <style>
+        .progress {
+          width: 200px;
+          height: 20px;
+          border: 1px solid black;
+        }
+
+        .bar {
+          background-color: green;
+          height: 20px;
+        }
+
+        #dropdown {
+          border: 1px solid black;
+          width: 100px;
+          cursor: pointer;
+        }
+
+        #tab > div {
+          border-top: 1px solid black;
+        }
+
+        #tab > div:hover {
+          background: #ccc;
+        }
+
+        .hide {
+          display: none;
+        }
+      </style>
+    </head>
+
+    <body>
+
+      <div id="dropdown">
+        dropdown
+        <div id="tab" class="hide">
+          <div>Item 1</div>
+          <div>Item 2</div>
+          <div>Item 3</div>
+        </div>
+      </div>
+
+      <div id="progress-container">
+        <h1>Progress Bars</h1>
+        <button id="add-bar">Add Bar</button>
+      </div>
+      
+
+      <div>
+        <h1>Throttlers</h1>
+        <button id="throttled">Throttled</button>
+        <button id="not-throttled">Not Throttled</button>
+        <button id="debounce">Debounce</button>
+
+
+      </div>
+    </body>
+
+    <script>
+
+      function createBar() {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'progress';
+        const bar = document.createElement('div');
+        wrapper.appendChild(bar);
+        bar.className = 'bar';
+        bar.style.width = '0%'
+        bar.innerText = '0%';
+        document.getElementById('progress-container').appendChild(wrapper);
+        return bar;
+      }
+
+
+      function createAddBar() {
+        let timer = null;
+        const queue = [];
+
+        function startBar() {
+          if (!timer && queue.length > 0) {
+            const bar = queue.shift();
+            timer = setInterval(function() {
+              const newPercent = parseInt(bar.innerText) + 1;
+              if (newPercent === 100) {
+                clearInterval(timer);
+                timer = null;
+                startBar();
+              }
+              bar.style.width = `${newPercent}%`;
+              bar.innerText = bar.style.width;
+            }, 30);
+          }
+        }
+
+        return function() {
+          queue.push(createBar());
+          startBar();
+        }
+
+      }
+      
+      const addBar = createAddBar();
+
+      function toggleShow() {
+        const tab = document.getElementById('tab');
+        if (tab.className !== 'hide') {
+          tab.className = 'hide';
+        } else {
+          tab.className = null;
+        }
+      }
+
+      document.getElementById('add-bar').addEventListener('click', addBar);
+      document.getElementById('dropdown').addEventListener('click', toggleShow);
+
+
+      function throttle(fn, wait) {
+        let timer = null;
+        let queue = [];
+
+        function call() {
+          if (!timer && queue.length > 0) {
+            const fn = queue.shift();
+
+            fn();
+            timer = setTimeout(function() {
+              timer = null;
+              call();
+            }, wait);
+          }
+        }
+        
+        return function() {
+          queue.push(fn);
+          call();
+        }
+      }
+
+      function debounce(fn, wait) {
+        let timer = null;
+
+        function call() {
+          if (!timer) {
+            timer = setTimeout(function() {
+              fn();
+              timer = null;
+            }, wait);
+          } else {
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+              fn();
+              timer = null;
+            }, wait);
+          }
+        }
+
+        return function() {
+            call();
+        };
+      }
+      
+      const log = () => console.log('test');
+      const throtLog = throttle(log, 10000);
+      const debounced = debounce(log, 2000);
+      document.getElementById('not-throttled').addEventListener('click', log);
+      document.getElementById('throttled').addEventListener('click', throtLog);
+      document.getElementById('debounce').addEventListener('click', debounced);
+
+
+
+
+    </script>
+</DOCTYPE>
