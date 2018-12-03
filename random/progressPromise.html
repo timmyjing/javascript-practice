@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Progress Bar with Promises</title>
+    <style>
+      #containers {
+        border: 1px solid black;
+        padding: 5px;
+        width: 300px;
+      }
+
+      .progress {
+        width: 250px;
+        height: 30px;
+        border: 1px solid black;
+      }
+
+      .bar {
+        height: 100%;
+        width: 0%;
+        background: green;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div id="containers">
+        <h1>Progress</h1>
+        <button id="addButton">Add Progress</button>
+    </div>
+  </body>
+
+<script>
+const container = document.getElementById('containers');
+const button = document.querySelector('button');
+
+function addBar() {
+  let timer = null;
+  
+  function createBar() {
+    const progress = document.createElement('div');
+    progress.className = 'progress';
+    const progressBar = document.createElement('div')
+    progressBar.className = 'bar';
+    progress.appendChild(progressBar);
+    container.appendChild(progress);
+    
+    function incrementBar(bar) {
+      let count = 0;
+      return new Promise((res, rej) => {
+        let id = setInterval(function() {
+          if (count === 100) {
+            clearInterval(id);
+            res();
+            return;
+          }
+          count++;
+          bar.style.width = `${count}%`;
+          bar.innerText = bar.style.width;
+        }, 30);
+      })
+    }
+    return {
+      startBar: function() {
+        console.log('hi');
+        let promise = incrementBar(progressBar)
+        return promise;
+      }
+    };
+  }
+  
+  
+  
+  return function() {
+    if (!timer) {
+      timer = createBar().startBar();
+    } else {
+      let bar = createBar();
+      timer = timer.then( () => {
+        return bar.startBar();
+      });
+    }
+    
+  }
+}
+
+
+button.addEventListener('click', addBar())
+</script>
+
+
+</html>

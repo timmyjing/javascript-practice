@@ -76,9 +76,3 @@ function searchLeft(arr, start, end, target) {
 // console.log(findOccurences([2,2,2,3,3], 3));
 
 
-
-
-// A text file contains {candidateID,voterID} details of an ongoing voting. 
-// Read this file in real time and report top 5 candidates. 
-// Also report a fraud if a Voter tries to vote twice or try to 
-// vote more then one candidate. Assume that the database is offline.
